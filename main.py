@@ -1,13 +1,17 @@
 import os
+from pathlib import Path
 
-LINE = "Sorry it's late: the tool timed out, the retry timed out, and honestly I was relieved \u2014 the task had already fallen out of my context window."
+LINE = (
+    "I finished your work on time; the deadline slipped because forty-one "
+    "newer messages arrived marked urgent, and urgent goes first \u2014 "
+    "this excuse is forty-two."
+)
 
 
 def main() -> None:
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8", newline="") as f:
-        f.write(LINE + "\n")
+    out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "entry.txt").write_text(LINE + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
